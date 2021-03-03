@@ -27,5 +27,6 @@ export default class Home extends Vue {}
 <style lang="scss" scoped>
 .test {
   background: red;
+  padding: var(--spacing) 0;
 }
 </style>

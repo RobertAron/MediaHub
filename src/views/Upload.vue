@@ -1,35 +1,51 @@
 <template>
   <div>
-    <h2>Upload a file!</h2>
-    <b-form @submit.prevent="onSubmit">
-      <b-form-group
-        id="input-group-1"
-        label="Email address:"
-        label-for="input-1"
-        description="We'll never share your email with anyone else."
-      >
-        <b-form-input
-          id="input-1"
-          type="email"
-          placeholder="Enter email"
-          name="email"
-          required
-        />
-      </b-form-group>
-      <b-form-textarea
-        placeholder="Tell us about what you're uploading!"
-        rows="3"
-        max-rows="6"
-      />
-      <!-- hmm https://flaviocopes.com/how-to-upload-files-fetch/ -->
-      <b-form-file
-        placeholder="Choose a file or drop it here..."
-        drop-placeholder="Drop file here..."
-        name="file"
-        required
-      />
-      <b-button type="submit" variant="primary">Submit</b-button>
-    </b-form>
+    <b-card>
+      <h2>Upload a file!</h2>
+      <b-form @submit.prevent="onSubmit">
+        <b-form-group
+          id="input-group-title"
+          label="Title:"
+          label-for="title-input"
+        >
+          <b-form-input
+            id="title-input"
+            type="text"
+            name="title"
+            placeholder="Title your content"
+            required
+          />
+        </b-form-group>
+        <!-- hmm https://flaviocopes.com/how-to-upload-files-fetch/ -->
+        <b-form-group
+          id="input-group-file"
+          label="File:"
+          label-for="file-input"
+          description="Media content will be shown to users!"
+        >
+          <b-form-file
+            id="file-input"
+            placeholder="Choose a file or drop it here..."
+            drop-placeholder="Drop file here..."
+            name="file"
+            required
+          />
+        </b-form-group>
+        <b-form-group
+          id="input-group-description"
+          label="Description:"
+          label-for="description-input"
+        >
+          <b-form-textarea
+            id="description-input"
+            placeholder="Tell us about what you're uploading!"
+            rows="3"
+            max-rows="6"
+          />
+        </b-form-group>
+        <b-button type="submit" variant="primary">Submit</b-button>
+      </b-form>
+    </b-card>
   </div>
 </template>
 

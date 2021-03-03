@@ -12,8 +12,18 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <b-container fluid="lg" class="test">
+    <b-container fluid="lg" class="mainContainer">
       <router-view />
     </b-container>
   </div>
 </template>
+
+<style lang="scss">
+:root {
+  --spacing: 1.25rem;
+}
+
+.mainContainer {
+  padding: var(--spacing) 0;
+}
+</style>
