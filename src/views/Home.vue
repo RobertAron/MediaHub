@@ -1,22 +1,73 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div class="media-items">
+    <b-card v-for="item in content" :key="item.uuid" no-body class="card">
+      <b-button :href="item.downloadUrl" download>
+        <b-icon icon="download" aria-label="download" />
+      </b-button>
+      <div class="picture-area">
+        <picture v-if="item.mainSrc">
+          <img :src="item.mainSrc" :alt="item.title" />
+        </picture>
+        <picture v-else>
+          <ClipIcon width="100%" height="100%" />
+        </picture>
+      </div>
+      <b-card-body>
+        <b-link :to="{ name: 'FileDetails', params: { uuid: item.uuid } }">
+          <h4>{{ item.title }}</h4>
+        </b-link>
+        <p>
+          <small>
+            Uploaded {{ new Date(item.uploadedTimestamp).toLocaleString() }}
+          </small>
+        </p>
+        <p>{{ item.description }}</p>
+      </b-card-body>
+    </b-card>
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { Component, Prop, Vue } from "vue-property-decorator";
+import ClipIcon from "../assets/clip.svg";
+import { db } from "@/fakeDB";
 
 @Component({
   components: {
-    HelloWorld
-  }
+    ClipIcon,
+  },
 })
-export default class Home extends Vue {}
+export default class HelloWorld extends Vue {
+  // @Prop() private msg!: string;
+  content = Object.values(db);
+}
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.test {
-  background: red;
-  padding: var(--spacing) 0;
+.media-items {
+  display: grid;
+  gap: var(--spacing);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.picture-area {
+  width: 100%;
+  height: 200px;
+  > picture > * {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  > a {
+    position: absolute;
+    right: calc(var(--spacing) / 2);
+    top: calc(var(--spacing) / 2);
+  }
 }
 </style>
