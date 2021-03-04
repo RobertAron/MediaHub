@@ -19,6 +19,7 @@ type Video = {
 
 export type Content = FileBase | Picture | Video;
 
+const prePath = process.env.NODE_ENV === 'production' ? '/MediaHub' : ''
 
 const db: { [key: string]: Content } = [
   {
@@ -26,27 +27,27 @@ const db: { [key: string]: Content } = [
     title: "Title of the file",
     description:
       "This is a description. It can be a semi large length. It has info about this file and stuffs.",
-    downloadUrl: "/sub-content/testVideo.mp4",
+    downloadUrl: `${prePath}/sub-content/testVideo.mp4`,
     uploadedTimestamp: 0,
-    mainSrc: "/sub-content/testPhoto.jpg",
-    mp4: "/sub-content/testVideo.mp4"
+    mainSrc: `${prePath}/sub-content/testPhoto.jpg`,
+    mp4: `${prePath}/sub-content/testVideo.mp4`
   },
   {
     uuid: `${-1}`,
     title: "yooo",
     description: "A picture of myself",
-    downloadUrl: "/sub-content/testPhoto.jpg",
+    downloadUrl: `${prePath}/sub-content/testPhoto.jpg`,
     uploadedTimestamp: 0,
-    mainSrc: "/sub-content/testPhoto.jpg"
+    mainSrc: `${prePath}/sub-content/testPhoto.jpg`
   },
   {
     uuid: `${-2}`,
     title: "yooo2",
     description: "A video",
-    downloadUrl: "/sub-content/testVideo.mp4",
+    downloadUrl: `${prePath}/sub-content/testVideo.mp4`,
     uploadedTimestamp: 0,
-    mainSrc: "/sub-content/testPhoto.jpg",
-    mp4: "/sub-content/testVideo.mp4"
+    mainSrc: `${prePath}/sub-content/testPhoto.jpg`,
+    mp4: `${prePath}/sub-content/testVideo.mp4`
   },
   ...new Array(30).fill(null).map(
     (ele, index): Content => ({
