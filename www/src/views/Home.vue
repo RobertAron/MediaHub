@@ -1,5 +1,7 @@
 <template>
   <div class="media-items">
+    <!-- TODO: card that goes to the browse thing -->
+    <!-- https://mediasilo.com/ -->
     <b-card v-for="item in content" :key="item.uuid" no-body class="card">
       <b-button :href="item.downloadUrl" download>
         <b-icon icon="download" aria-label="download" />
