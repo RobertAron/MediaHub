@@ -23,6 +23,10 @@
   --spacing: 1.25rem;
 }
 
+body {
+  overflow-y: scroll;
+}
+
 .mainContainer {
   padding: var(--spacing) 0;
 }
