@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "cross-env AWS_PROFILE=robert sst test",
+    "start": "cross-env AWS_PROFILE=robert sst start",
+    "build": "cross-env AWS_PROFILE=robert sst build",
+    "deploy": "cross-env AWS_PROFILE=robert sst deploy",
+    "undeploy": "cross-env AWS_PROFILE=robert sst remove"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "1.91.0",
+    "@types/aws-lambda": "^8.10.70",
+    "aws-sdk": "^2.857.0",
+    "cross-env": "^7.0.3"
+  },
+  "dependencies": {
+    "@aws-cdk/core": "1.91.0",
+    "@serverless-stack/cli": "0.9.12",
+    "@serverless-stack/resources": "0.9.12",
+    "uuid": "7.0.3"
+  }
+}
