@@ -11,7 +11,7 @@
           <b-form-input
             id="title-input"
             type="text"
-            name="title"
+            v-model="title"
             placeholder="Title your content"
             required
           />
@@ -27,7 +27,7 @@
             id="file-input"
             placeholder="Choose a file or drop it here..."
             drop-placeholder="Drop file here..."
-            name="file"
+            v-model="file"
             required
           />
         </b-form-group>
@@ -38,6 +38,7 @@
         >
           <b-form-textarea
             id="description-input"
+            v-model='description'
             placeholder="Tell us about what you're uploading!"
             rows="3"
             max-rows="6"
@@ -51,18 +52,22 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import * as a from 'axios'
+import {createFile} from '../sdk'
+
+
 
 @Component
 export default class Upload extends Vue {
   // @Prop() private msg!: string;
+  title = ''
+  file = new File([],'')
+  description = ''
+
   onSubmit(event: Event) {
     if (!(event.target instanceof HTMLFormElement)) return;
     const formElement: HTMLFormElement = event.target;
-    const inputs = [...formElement.getElementsByTagName("input")];
-    const values = inputs
-      .filter(({ name }) => name)
-      .reduce((acc, { name, value }) => ({ ...acc, [name]: value }), {});
-    console.log(values);
+    createFile(this.title)
   }
 }
 </script>
