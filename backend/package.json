@@ -3,11 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "test": "cross-env AWS_PROFILE=robert sst test",
-    "start": "cross-env AWS_PROFILE=robert sst start",
-    "build": "cross-env AWS_PROFILE=robert sst build",
-    "deploy": "cross-env AWS_PROFILE=robert sst deploy",
-    "undeploy": "cross-env AWS_PROFILE=robert sst remove"
+    "test": "cross-env AWS_PROFILE=serverlessStack sst test",
+    "start": "cross-env AWS_PROFILE=serverlessStack sst start",
+    "build": "cross-env AWS_PROFILE=serverlessStack sst build",
+    "deploy": "cross-env AWS_PROFILE=serverlessStack sst deploy",
+    "undeploy": "cross-env AWS_PROFILE=serverlessStack sst remove",
+    "test-d": "sst test",
+    "start-d": "sst start",
+    "build-d": "sst build",
+    "deploy-d": "sst deploy",
+    "undeploy-d": "sst remove"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.91.0",

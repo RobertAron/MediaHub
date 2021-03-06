@@ -1,6 +1,6 @@
-import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyResult } from "aws-lambda";
 import {DynamoDB} from 'aws-sdk'
-import {serverError, clientError} from './common'
+import {serverError} from './common'
 const dynamoDb = new DynamoDB.DocumentClient()
 
 export async function main(): Promise<APIGatewayProxyResult> {

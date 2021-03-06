@@ -1,6 +1,5 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
 import { DynamoDB } from 'aws-sdk'
-import * as uuid from "uuid";
 import { serverError, clientError, notFoundError } from './common'
 const dynamoDb = new DynamoDB.DocumentClient()
 

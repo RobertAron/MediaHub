@@ -7,8 +7,8 @@ on:
 
 
 jobs:
-  build:
-    name: 🔨 build 🔨
+  build-www:
+    name: 🔨 build www 🔨
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,15 +18,31 @@ jobs:
           yarn build
       - uses: actions/upload-artifact@v1
         with:
-          name: wwwbuild
+          name: build
           path: www/dist
   publish-gh-pages:
     name: ✨ GH Pages Deploy
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-www
     steps:
       - uses: actions/download-artifact@v2
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./wwwbuild
+          publish_dir: ./build
+  deploy-backend:
+    name: deploy backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.TEST_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.TEST_AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - run: |
+          cd backend
+          yarn install
+          yarn build-d
+          yarn deploy-d

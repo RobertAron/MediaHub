@@ -29,7 +29,7 @@ export async function main(event : APIGatewayEvent): Promise<APIGatewayProxyResu
       mainSrc
     }
   };
-  const s3PutRes = await s3Client.putObject({
+  await s3Client.putObject({
     Body: res.files[0].content,
     Bucket: process.env.bucketName,
     Key: `${params.Item.id}.jpg`
