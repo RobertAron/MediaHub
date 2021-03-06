@@ -64,10 +64,13 @@ export default class Upload extends Vue {
   file = new File([],'')
   description = ''
 
+  handleFileUpload(file){
+    const test = document.querySelector('input[type="file"]')
+  }
+
   onSubmit(event: Event) {
     if (!(event.target instanceof HTMLFormElement)) return;
-    const formElement: HTMLFormElement = event.target;
-    createFile(this.title)
+    createFile(this.title, this.file)
   }
 }
 </script>

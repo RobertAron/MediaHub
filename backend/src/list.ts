@@ -9,7 +9,7 @@ export async function main(): Promise<APIGatewayProxyResult> {
   const params: DynamoDB.DocumentClient.ScanInput = {
     // Get the table name from the environment variable
     TableName: process.env.tableName,
-    IndexName: 'fileTimeIndex'
+    // IndexName: 'fileTimeIndex' ??? sort by date???
     
   };
   const res = await dynamoDb.scan(params).promise()

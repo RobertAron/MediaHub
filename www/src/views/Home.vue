@@ -3,7 +3,7 @@
     <!-- TODO: card that goes to the browse thing -->
     <!-- https://mediasilo.com/ -->
     <b-card v-for="item in content" :key="item.uuid" no-body class="card">
-      <b-button :href="item.downloadUrl" download>
+      <b-button :href="item.downloadUrl" download class="floatingButton">
         <b-icon icon="download" aria-label="download" />
       </b-button>
       <div class="picture-area">
@@ -32,7 +32,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ClipIcon from "../assets/clip.svg";
-import { db } from "@/fakeDB";
+import { listFiles, tempRes } from "../sdk";
 
 @Component({
   components: {
@@ -41,7 +41,16 @@ import { db } from "@/fakeDB";
 })
 export default class HelloWorld extends Vue {
   // @Prop() private msg!: string;
-  content = Object.values(db);
+  isLoading = true
+  content: tempRes[]  = [];
+
+  async mounted(){
+    const res = await listFiles()
+    this.content = res
+    console.log('list ressss')
+    console.log(res)
+    this.isLoading = false
+  }
 }
 </script>
 
@@ -66,7 +75,7 @@ export default class HelloWorld extends Vue {
 .card {
   position: relative;
   overflow: hidden;
-  > a {
+  > .floatingButton {
     position: absolute;
     right: calc(var(--spacing) / 2);
     top: calc(var(--spacing) / 2);
