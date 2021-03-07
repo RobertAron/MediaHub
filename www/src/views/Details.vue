@@ -3,7 +3,7 @@
     <dir class="header">
       <h1>{{ this.current.content.title }}</h1>
       <b-dropdown variant="primary" text="Actions" right>
-        <b-dropdown-item><b-icon-download/> Download</b-dropdown-item>
+        <b-dropdown-item :href="this.current.content.downloadUrl"><b-icon-download/> Download</b-dropdown-item>
         <b-dropdown-item @click="deleteItem"><b-icon-trash/> Delete</b-dropdown-item>
       </b-dropdown>
     </dir>
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { Content } from "@/fakeDB";
+import { Content } from "@/FileData";
 import Vue from "vue";
 import { getFile, deleteFile } from "../sdk";
 type LoadingContent = {

@@ -1,5 +1,5 @@
 import * as a from 'axios'
-import { Content } from './fakeDB'
+import { Content } from './FileData'
 const axios = a.default
 
 const baseURL: string = process.env.VUE_APP_API_ROOT
