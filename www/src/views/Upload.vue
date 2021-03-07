@@ -3,38 +3,35 @@
     <b-card>
       <h2>Upload a file!</h2>
       <b-form @submit.prevent="onSubmit">
-        <b-form-group
-          id="input-group-title"
-          label="Title:"
-          label-for="title-input"
-        >
-          <b-form-input
-            id="title-input"
-            type="text"
-            v-model="title"
-            placeholder="Title your content"
-            required
-          />
-        </b-form-group>
-        <!-- hmm https://flaviocopes.com/how-to-upload-files-fetch/ -->
-        <b-form-group
-          id="input-group-file"
-          label="File:"
-          label-for="file-input"
-          description="Media content will be shown to users!"
-        >
-          <b-form-file
-            id="file-input"
-            placeholder="Choose a file or drop it here..."
-            drop-placeholder="Drop file here..."
-            v-model="file"
-            required
-          />
-        </b-form-group>
-        <p>
-          File size must be under 6mb. The current file is
-          {{ file.size / 1000000 }}mb
-        </p>
+        <div class='grouped-inputs'>
+          <b-form-group
+            id="input-group-title"
+            label="Title:"
+            label-for="title-input"
+          >
+            <b-form-input
+              id="title-input"
+              type="text"
+              v-model="title"
+              placeholder="Title your content"
+              required
+            />
+          </b-form-group>
+          <b-form-group
+            id="input-group-file"
+            label="File:"
+            label-for="file-input"
+            :description='fileHelperText'
+          >
+            <b-form-file
+              id="file-input"
+              placeholder="Choose a file or drop it here..."
+              drop-placeholder="Drop file here..."
+              v-model="file"
+              required
+            />
+          </b-form-group>
+        </div>
         <b-form-group
           id="input-group-description"
           label="Description:"
@@ -48,9 +45,13 @@
             max-rows="6"
           />
         </b-form-group>
-        <b-button type="submit" variant="primary">Submit</b-button>
+        <div class='button-group'>
+          <b-button type="submit" variant="primary" :disabled='isLoading'>Submit</b-button>
+          <b-button :to="{name:'Home'}" variant="secondary">Cancel</b-button>
+        </div>
       </b-form>
     </b-card>
+    <b-progress v-if="isLoading" :value="percantageComplete" :max="1" show-progress animated></b-progress>
   </div>
 </template>
 
@@ -64,16 +65,47 @@ export default Vue.extend({
   data(){
     return {
       title: '',
-      file: new File([],''),
-      description: ''
+      file: null  as File | null,
+      description: '',
+      isLoading: false,
+      percantageComplete: 0
+    }
+  },
+  computed: {
+    fileHelperText(): string{
+      const fileSize = this.file? this.file.size / 1000000 :  null
+      const sizeText = this.file? ` The current file size is ${fileSize}`:''
+      const helperText = `File size must be under 6mb.${sizeText}`
+      return helperText
     }
   },
   methods: {
     async onSubmit(event: Event) {
       if (!(event.target instanceof HTMLFormElement)) return;
-      const res = await createFile(this.title, this.file, this.description)
+      if(this.file === null) return
+      if(this.file.size> 6 * 1000000) return
+      this.isLoading = true
+      const res = await createFile(this.title, this.file, this.description, (progressEvent)=>{
+        this.percantageComplete = progressEvent.loaded / progressEvent.total
+      })
       this.$router.push({name: 'FileDetails', params:{id:res.id}} )
     }
   }
 })
 </script>
+
+
+<style lang="scss" scoped>
+.button-group{
+  display: grid;
+  gap: var(--spacing);
+  grid-auto-flow: column;
+  grid-auto-columns: min-content;
+}
+
+.grouped-inputs{
+  display: grid;
+  gap: var(--spacing);
+  grid-auto-flow: column;
+}
+</style>

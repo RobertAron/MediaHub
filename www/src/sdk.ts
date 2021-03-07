@@ -4,13 +4,13 @@ const axios = a.default
 
 const baseURL: string = process.env.VUE_APP_API_ROOT
 
-async function createFile(title: string, file: File, description: string){
+async function createFile(title: string, file: File, description: string, onUploadProgress?: (progressEvent : any)=> void){
     const url = `${baseURL}/files`
     const formData = new FormData()
     formData.append("title",title)
     formData.append("file",file)
     formData.append("description",description)
-    const res = await axios.post<{id:string}>(url, formData)
+    const res = await axios.post<{id:string}>(url, formData, {onUploadProgress})
     return res.data
 }
 

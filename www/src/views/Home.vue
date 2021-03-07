@@ -121,6 +121,7 @@ a {
 }
 
 .picture-body{
+  padding: calc(var(--spacing) / 4)var(--spacing);
   position: absolute;
   bottom: 0;
   left: 0;
@@ -129,7 +130,8 @@ a {
   background: linear-gradient(
     to bottom,
     rgba(0,0,0,.0) 0%,
-    rgba(0,0,0,.5) 30%,
+    rgba(0,0,0,.3) 20%,
+    rgba(0,0,0,1) 90%,
   )
 }
 </style>

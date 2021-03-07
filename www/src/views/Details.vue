@@ -7,6 +7,19 @@
         <b-dropdown-item @click="deleteItem"><b-icon-trash/> Delete</b-dropdown-item>
       </b-dropdown>
     </dir>
+    
+    <video controls v-if="this.current.content.videoSrc !== undefined">
+      <source :src="this.current.content.videoSrc" :type="this.current.content.videoType" />
+      Sorry, your browser doesn't support embedded videos.
+    </video>
+
+    <picture v-else-if="this.current.content.imageSrc !== undefined">
+      <img :src="this.current.content.imageSrc"/>
+    </picture>
+
+    <p v-else>No preview is available for this content.</p>
+
+
     <p>
       <sub>
         <time :datetime="new Date(this.current.content.uploadedTimestamp).toString()">
@@ -14,17 +27,12 @@
         </time>
       </sub>
     </p>
-    
-    <video controls v-if="this.current.content.videoSrc !== undefined">
-      <source :src="this.current.content.videoSrc" :type="this.current.content.videoType" />
-      Sorry, your browser doesn't support embedded videos.
-    </video>
-    <picture v-else-if="this.current.content.imageSrc !== undefined">
-      <img :src="this.current.content.imageSrc"/>
-    </picture>
-    <p v-else>No preview is available for this content.</p>
     <p>{{ this.current.content.description }}</p>
+
+    
   </div>
+
+
   <div v-else-if="this.current.status==='Loading'">
     <b-skeleton/>
     <b-skeleton-img/>
