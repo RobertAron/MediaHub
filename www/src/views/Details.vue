@@ -78,7 +78,8 @@ export default Vue.extend({
       }
     },
     async deleteItem(){
-      deleteFile(this.$route.params.id)
+      await deleteFile(this.$route.params.id)
+      this.$router.push({name:'Home'})
     }
   },
 });

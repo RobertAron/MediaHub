@@ -31,7 +31,10 @@
             required
           />
         </b-form-group>
-        <p>File size must be under 6mb. The current file is {{file.size/1000000}}mb</p>
+        <p>
+          File size must be under 6mb. The current file is
+          {{ file.size / 1000000 }}mb
+        </p>
         <b-form-group
           id="input-group-description"
           label="Description:"
@@ -39,7 +42,7 @@
         >
           <b-form-textarea
             id="description-input"
-            v-model='description'
+            v-model="description"
             placeholder="Tell us about what you're uploading!"
             rows="3"
             max-rows="6"
@@ -57,17 +60,20 @@ import * as a from 'axios'
 import {createFile} from '../sdk'
 
 
-
-@Component
-export default class Upload extends Vue {
-  // @Prop() private msg!: string;
-  title = ''
-  file = new File([],'')
-  description = ''
-
-  onSubmit(event: Event) {
-    if (!(event.target instanceof HTMLFormElement)) return;
-    createFile(this.title, this.file, this.description)
+export default Vue.extend({
+  data(){
+    return {
+      title: '',
+      file: new File([],''),
+      description: ''
+    }
+  },
+  methods: {
+    async onSubmit(event: Event) {
+      if (!(event.target instanceof HTMLFormElement)) return;
+      const res = await createFile(this.title, this.file, this.description)
+      this.$router.push({name: 'FileDetails', params:{id:res.id}} )
+    }
   }
-}
+})
 </script>
