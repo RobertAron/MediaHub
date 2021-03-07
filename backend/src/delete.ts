@@ -12,8 +12,6 @@ export async function main(event: APIGatewayEvent): Promise<APIGatewayProxyResul
     TableName: process.env.tableName,
     Key: { id }
   };
-  console.log('params')
-  console.log(params)
   await dynamoDb.delete(params).promise();
 
   return {

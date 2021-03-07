@@ -31,6 +31,7 @@
             required
           />
         </b-form-group>
+        <p>File size must be under 6mb. The current file is {{file.size/1000000}}mb</p>
         <b-form-group
           id="input-group-description"
           label="Description:"

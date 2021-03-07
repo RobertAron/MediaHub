@@ -10,6 +10,7 @@ const s3Client = new S3()
 const dynamoDb = new DynamoDB.DocumentClient()
 
 export async function main(event : APIGatewayEvent): Promise<APIGatewayProxyResult> {
+  console.log('in the thingy')
   if(process.env.tableName === undefined) return serverError
   if(process.env.bucketName === undefined) return serverError
   const res = await multipartParser.parse(event)
@@ -19,6 +20,10 @@ export async function main(event : APIGatewayEvent): Promise<APIGatewayProxyResu
   const mainSrc = res.files?.[0].contentType === 'image/jpeg' ? 
     `https://${process.env.bucketName}.s3.amazonaws.com/${id}.jpg` : 
     undefined
+
+  console.log('yooo')
+  console.log(res.files?.[0].contentType)
+
 
   const params: DynamoDB.DocumentClient.PutItemInput = {
     TableName: process.env.tableName,
@@ -32,9 +37,9 @@ export async function main(event : APIGatewayEvent): Promise<APIGatewayProxyResu
   await s3Client.putObject({
     Body: res.files[0].content,
     Bucket: process.env.bucketName,
-    Key: `${params.Item.id}.jpg`
+    Key: `${params.Item.id}-${res.files?.[0].filename}`
   }).promise()
-  await dynamoDb.put(params).promise()
+  // await dynamoDb.put(params).promise()
   
   
   

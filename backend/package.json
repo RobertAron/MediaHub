@@ -26,6 +26,7 @@
     "@serverless-stack/cli": "0.9.12",
     "@serverless-stack/resources": "0.9.12",
     "lambda-multipart-parser": "^1.0.1",
-    "uuid": "7.0.3"
+    "uuid": "7.0.3",
+    "video-thumbnail-generator": "^1.1.3"
   }
 }

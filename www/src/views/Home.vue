@@ -59,7 +59,7 @@ export default class HelloWorld extends Vue {
 .media-items {
   display: grid;
   gap: var(--spacing);
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .picture-area {
