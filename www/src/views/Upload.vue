@@ -67,7 +67,7 @@ export default class Upload extends Vue {
 
   onSubmit(event: Event) {
     if (!(event.target instanceof HTMLFormElement)) return;
-    createFile(this.title, this.file)
+    createFile(this.title, this.file, this.description)
   }
 }
 </script>

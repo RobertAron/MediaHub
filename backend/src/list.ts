@@ -13,6 +13,15 @@ export async function main(): Promise<APIGatewayProxyResult> {
     
   };
   const res = await dynamoDb.scan(params).promise()
+
+  res.Items?.map((ele)=>{
+    ele.id
+    ele.uploadedTimestamp
+    ele.title
+    ele.imageSrc
+    ele.downloadUrl
+    ele.description
+  })
   
   
   return {

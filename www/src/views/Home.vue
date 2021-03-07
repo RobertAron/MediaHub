@@ -2,20 +2,20 @@
   <div class="media-items">
     <!-- TODO: card that goes to the browse thing -->
     <!-- https://mediasilo.com/ -->
-    <b-card v-for="item in content" :key="item.uuid" no-body class="card">
+    <b-card v-for="item in content" :key="item.id" no-body class="card">
       <b-button :href="item.downloadUrl" download class="floatingButton">
         <b-icon icon="download" aria-label="download" />
       </b-button>
       <div class="picture-area">
-        <picture v-if="item.mainSrc">
-          <img :src="item.mainSrc" :alt="item.title" />
+        <picture v-if="item.imageSrc">
+          <img :src="item.imageSrc" :alt="item.title" />
         </picture>
         <picture v-else>
           <ClipIcon width="100%" height="100%" />
         </picture>
       </div>
       <b-card-body>
-        <b-link :to="{ name: 'FileDetails', params: { uuid: item.uuid } }">
+        <b-link :to="{ name: 'FileDetails', params: { id: item.id } }">
           <h4>{{ item.title }}</h4>
         </b-link>
         <p>
@@ -47,8 +47,6 @@ export default class HelloWorld extends Vue {
   async mounted(){
     const res = await listFiles()
     this.content = res
-    console.log('list ressss')
-    console.log(res)
     this.isLoading = false
   }
 }

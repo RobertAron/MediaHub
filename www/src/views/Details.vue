@@ -3,18 +3,18 @@
     <h1>{{ this.current.content.title }}</h1>
     <p>
       <sub>
-        <date>
+        <time :datetime="new Date(this.current.content.uploadedTimestamp).toString()">
           {{ new Date(this.current.content.uploadedTimestamp).toLocaleString() }}
-        </date>
+        </time>
       </sub>
     </p>
     
-    <video controls v-if="this.current.content.mp4 !== undefined">
-      <source :src="this.current.content.mp4" type="video/mp4" />
+    <video controls v-if="this.current.content.videoSrc !== undefined">
+      <source :src="this.current.content.videoSrc" :type="this.current.content.videoType" />
       Sorry, your browser doesn't support embedded videos.
     </video>
-    <picture v-else-if="this.current.content.mainSrc !== undefined">
-      <img :src="this.current.content.mainSrc"/>
+    <picture v-else-if="this.current.content.imageSrc !== undefined">
+      <img :src="this.current.content.imageSrc"/>
     </picture>
     <p v-else>No preview is available for this content.</p>
     <p>{{ this.current.content.description }}</p>
@@ -30,8 +30,9 @@
 </template>
 
 <script lang="ts">
-import { Content, db } from "@/fakeDB";
+import { Content } from "@/fakeDB";
 import Vue from "vue";
+import { getFile } from "../sdk";
 type LoadingContent = {
   status: "Loading";
 };
@@ -57,17 +58,18 @@ export default Vue.extend({
     this.loadContent();
   },
   methods: {
-    loadContent() {
-      setTimeout(() => {
-        if (db[this.$route.params.uuid] === undefined) {
-          this.current.status = "Error";
-        } else {
-          this.current = {
-            status: 'Complete',
-            content: db[this.$route.params.uuid]
-          }
+    async loadContent() {
+      try{
+        const res = await getFile(this.$route.params.id)
+        this.current = {
+          status: 'Complete',
+          content: res
         }
-      }, 1000);
+      }
+      catch(err){
+        console.error(err)
+        this.current.status = "Error";
+      }
     },
   },
 });

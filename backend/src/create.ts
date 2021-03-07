@@ -10,36 +10,45 @@ const s3Client = new S3()
 const dynamoDb = new DynamoDB.DocumentClient()
 
 export async function main(event : APIGatewayEvent): Promise<APIGatewayProxyResult> {
-  console.log('in the thingy')
   if(process.env.tableName === undefined) return serverError
   if(process.env.bucketName === undefined) return serverError
   const res = await multipartParser.parse(event)
   if(!Buffer.isBuffer(res.files?.[0].content)) return clientError
   if(res.title === undefined) return clientError
+
+  const file = res.files?.[0]
+
   const id = uuid.v1()
-  const mainSrc = res.files?.[0].contentType === 'image/jpeg' ? 
-    `https://${process.env.bucketName}.s3.amazonaws.com/${id}.jpg` : 
-    undefined
+  const s3Key = `${id}-${file.filename}`
+  const s3Location = `https://${process.env.bucketName}.s3.amazonaws.com/${s3Key}`
+  const imageSrc = res.files?.[0].contentType.startsWith('image') ? s3Location : undefined
+  const videoSrc = res.files?.[0].contentType.startsWith('video') ? s3Location : undefined
+  const videoType = res.files?.[0].contentType.startsWith('video') ? res.files?.[0].contentType : undefined
 
-  console.log('yooo')
-  console.log(res.files?.[0].contentType)
 
-
+  const item = {
+    id: id,
+    uploadedTimestamp: Date.now(),
+    title: res.title,
+    imageSrc,
+    videoSrc,
+    videoType,
+    downloadUrl: s3Location,
+    description: res.description,
+    s3Key
+  }
+  
+  
   const params: DynamoDB.DocumentClient.PutItemInput = {
     TableName: process.env.tableName,
-    Item: {
-      id: id,
-      uploadedTimestamp: Date.now(),
-      title: res.title,
-      mainSrc
-    }
+    Item: item
   };
   await s3Client.putObject({
     Body: res.files[0].content,
     Bucket: process.env.bucketName,
-    Key: `${params.Item.id}-${res.files?.[0].filename}`
+    Key: s3Key
   }).promise()
-  // await dynamoDb.put(params).promise()
+  await dynamoDb.put(params).promise()
   
   
   

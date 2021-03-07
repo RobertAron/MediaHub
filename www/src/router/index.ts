@@ -19,7 +19,7 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Upload.vue')
   },
   {
-    path: '/details/:uuid',
+    path: '/details/:id',
     name: 'FileDetails',
     component: () => import(/* webpackChunkName: "about" */ '../views/Details.vue')
   }
