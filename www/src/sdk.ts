@@ -33,8 +33,14 @@ async function getFile(id : string){
     return res.data
 }
 
+async function deleteFile(id: string){
+    const url = `${baseURL}/files/${id}`
+    const res = await axios.delete<Content>(url)
+}
+
 export {
     createFile,
     listFiles,
-    getFile
+    getFile,
+    deleteFile
 }

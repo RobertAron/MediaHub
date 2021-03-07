@@ -1,6 +1,12 @@
 <template>
   <div v-if="this.current.status==='Complete'">
-    <h1>{{ this.current.content.title }}</h1>
+    <dir class="header">
+      <h1>{{ this.current.content.title }}</h1>
+      <b-dropdown variant="primary" text="Actions" right>
+        <b-dropdown-item><b-icon-download/> Download</b-dropdown-item>
+        <b-dropdown-item @click="deleteItem"><b-icon-trash/> Delete</b-dropdown-item>
+      </b-dropdown>
+    </dir>
     <p>
       <sub>
         <time :datetime="new Date(this.current.content.uploadedTimestamp).toString()">
@@ -32,7 +38,7 @@
 <script lang="ts">
 import { Content } from "@/fakeDB";
 import Vue from "vue";
-import { getFile } from "../sdk";
+import { getFile, deleteFile } from "../sdk";
 type LoadingContent = {
   status: "Loading";
 };
@@ -71,12 +77,20 @@ export default Vue.extend({
         this.current.status = "Error";
       }
     },
+    async deleteItem(){
+      deleteFile(this.$route.params.id)
+    }
   },
 });
 </script>
 
 
 <style lang="scss" scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
 video {
   width: 100%;
 }
