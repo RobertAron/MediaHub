@@ -1,4 +1,5 @@
 import * as a from 'axios'
+import { Content } from './fakeDB'
 const axios = a.default
 
 const baseURL: string = process.env.VUE_APP_API_ROOT
@@ -22,13 +23,13 @@ export type tempRes = {
 
 async function listFiles(){
     const url = `${baseURL}/files`
-    const res = await axios.get<tempRes[]>(url)
+    const res = await axios.get<Content[]>(url)
     return res.data
 }
 
 async function getFile(id : string){
     const url = `${baseURL}/files/${id}`
-    const res = await axios.get<tempRes[]>(url)
+    const res = await axios.get<Content>(url)
     return res.data
 }
 
