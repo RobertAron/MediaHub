@@ -30,6 +30,7 @@
 </template>
 
 <script lang="ts">
+import { Content } from "@/fakeDB";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ClipIcon from "../assets/clip.svg";
 import { listFiles, tempRes } from "../sdk";
@@ -42,7 +43,7 @@ import { listFiles, tempRes } from "../sdk";
 export default class HelloWorld extends Vue {
   // @Prop() private msg!: string;
   isLoading = true
-  content: tempRes[]  = [];
+  content: Content[]  = [];
 
   async mounted(){
     const res = await listFiles()
