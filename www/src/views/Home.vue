@@ -1,42 +1,45 @@
 <template>
-  <div class="media-items">
-    <!-- TODO: card that goes to the browse thing -->
-    <!-- https://mediasilo.com/ -->
-    <div>
-      <b-link :to="{ name: 'Upload'}" class='descrete-link'>
-        <b-card class="card" body-class='create-card' to="yo">
-          <h4>Upload New File <b-icon-upload/></h4>
-        </b-card>
-      </b-link>
-    </div>
-    <div v-for="item in content" :key="item.id">
-      <b-card no-body class="card">
-        <b-button :href="item.downloadUrl" download class="floatingButton" variant="outline-primary">
-          <b-icon icon="download" aria-label="download" />
-        </b-button>
-        <b-link :to="{ name: 'FileDetails', params: { id: item.id } }">
-          <div class="picture-area">
-            <picture v-if="item.imageSrc">
-              <img :src="item.imageSrc" :alt="item.title" />
-            </picture>
-            <picture v-else>
-              <VideoIcon v-if="item.videoSrc" width="100%" height="100%" />
-              <FileIcon v-else width="100%" height="100%" />
-            </picture>
-          </div>
-          <b-card-body class="picture-body">
-            <h4>{{ item.title }}</h4>
-            <p>
-              <small>
-                Uploaded {{ new Date(item.createdDate).toLocaleString() }}
-              </small>
-            </p>
-          </b-card-body>
+  <div class='root'>
+    <b-form-input v-model="searchText" placeholder="Search..."></b-form-input>
+    <div class="media-items">
+      <!-- TODO: card that goes to the browse thing -->
+      <!-- https://mediasilo.com/ -->
+      <div>
+        <b-link :to="{ name: 'Upload'}" class='descrete-link'>
+          <b-card class="card" body-class='create-card' to="yo">
+            <h4>Upload New File <b-icon-upload/></h4>
+          </b-card>
         </b-link>
-      </b-card>
-    </div>
-    <div v-for="n in isLoading?8:0" :key='n'>
-      <b-skeleton-img/>
+      </div>
+      <div v-for="item in filteredContent" :key="item.id">
+        <b-card no-body class="card">
+          <b-button :href="item.downloadUrl" download class="floatingButton" variant="outline-primary">
+            <b-icon icon="download" aria-label="download" />
+          </b-button>
+          <b-link :to="{ name: 'FileDetails', params: { id: item.id } }">
+            <div class="picture-area">
+              <picture v-if="item.imageSrc">
+                <img :src="item.imageSrc" :alt="item.title" />
+              </picture>
+              <picture v-else>
+                <VideoIcon v-if="item.videoSrc" width="100%" height="100%" />
+                <FileIcon v-else width="100%" height="100%" />
+              </picture>
+            </div>
+            <b-card-body class="picture-body">
+              <h4>{{ item.title }}</h4>
+              <p>
+                <small>
+                  Uploaded {{ new Date(item.createdDate).toLocaleString() }}
+                </small>
+              </p>
+            </b-card-body>
+          </b-link>
+        </b-card>
+      </div>
+      <div v-for="n in isLoading?8:0" :key='n'>
+        <b-skeleton-img/>
+      </div>
     </div>
   </div>
 </template>
@@ -60,17 +63,29 @@ export default class HelloWorld extends Vue {
   // @Prop() private msg!: string;
   isLoading = true
   content: Content[]  = [];
+  searchText = ''
 
   async mounted(){
     const res = await listFiles()
     this.content = res
     this.isLoading = false
   }
+
+  get filteredContent() {
+    return this.content.filter((item:Content)=>item.title.includes(this.searchText))
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+
+.root {
+  display: grid;
+  gap: var(--spacing);
+}
+
+
 .media-items {
   display: grid;
   gap: var(--spacing);
