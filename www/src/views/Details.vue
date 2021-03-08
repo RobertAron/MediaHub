@@ -9,10 +9,11 @@
     </dir>
     
     <video
-      controls
       v-if="this.current.content.videoSrc !== undefined" 
+      controls
       class="video-js vjs-theme-sea"
-      id="my-video"
+      data-setup='{"fluid":true}'
+      id="my-player"
     >
       <source :src="this.current.content.videoSrc" :type="this.current.content.videoType" />
       Sorry, your browser doesn't support embedded videos.
@@ -52,6 +53,8 @@
 import { Content } from "@/FileData";
 import Vue from "vue";
 import { getFile, deleteFile } from "../sdk";
+import * as videojs from 'video.js'
+
 type LoadingContent = {
   status: "Loading";
 };
@@ -73,8 +76,9 @@ export default Vue.extend({
       current: { status: "Loading" },
     } as DetailsData;
   },
-  created() {
-    this.loadContent();
+  async created() {
+    await this.loadContent();
+    if(this.current.content.videoSrc !== undefined) videojs('my-player')
   },
   methods: {
     async loadContent() {
