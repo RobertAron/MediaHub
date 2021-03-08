@@ -1,6 +1,6 @@
 <template>
   <div class='root'>
-    <b-form-input v-model="searchText" placeholder="Search..."></b-form-input>
+    <b-form-input v-model="searchText" placeholder="Search..." size="lg"/>
     <div class="media-items">
       <!-- TODO: card that goes to the browse thing -->
       <!-- https://mediasilo.com/ -->
