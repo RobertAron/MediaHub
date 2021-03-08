@@ -8,16 +8,10 @@
       </b-dropdown>
     </dir>
     
-    <video
-      v-if="this.current.content.videoSrc !== undefined" 
-      controls
-      class="video-js vjs-theme-sea"
-      data-setup='{"fluid":true}'
-      id="my-player"
-    >
+    <VuePlayerVue v-if="this.current.content.videoSrc !== undefined">
       <source :src="this.current.content.videoSrc" :type="this.current.content.videoType" />
       Sorry, your browser doesn't support embedded videos.
-    </video>
+    </VuePlayerVue>
 
     <picture v-else-if="this.current.content.imageSrc !== undefined">
       <img :src="this.current.content.imageSrc"/>
@@ -53,7 +47,7 @@
 import { Content } from "@/FileData";
 import Vue from "vue";
 import { getFile, deleteFile } from "../sdk";
-import * as videojs from 'video.js'
+import VuePlayerVue from "../components/VideoJsVue.vue";
 
 type LoadingContent = {
   status: "Loading";
@@ -68,17 +62,22 @@ type LoadedContent = {
 
 type DetailsData = {
   current: LoadingContent | ErrorContent | LoadedContent;
+  video: any
 };
+
+const playerOptions = {
+  fluid: true
+}
 
 export default Vue.extend({
   data() {
     return {
       current: { status: "Loading" },
+      video: null
     } as DetailsData;
   },
   async created() {
     await this.loadContent();
-    if(this.current.content.videoSrc !== undefined) videojs('my-player')
   },
   methods: {
     async loadContent() {
@@ -99,6 +98,9 @@ export default Vue.extend({
       this.$router.push({name:'Home'})
     }
   },
+  components: {
+    VuePlayerVue
+  }
 });
 </script>
 

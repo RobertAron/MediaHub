@@ -20,7 +20,8 @@
               <img :src="item.imageSrc" :alt="item.title" />
             </picture>
             <picture v-else>
-              <ClipIcon width="100%" height="100%" />
+              <VideoIcon v-if="item.videoSrc" width="100%" height="100%" />
+              <FileIcon v-else width="100%" height="100%" />
             </picture>
           </div>
           <b-card-body class="picture-body">
@@ -44,11 +45,15 @@
 import { Content } from "@/FileData";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ClipIcon from "../assets/clip.svg";
+import FileIcon from "../assets/file.svg";
+import VideoIcon from "../assets/video.svg";
 import { listFiles, tempRes } from "../sdk";
 
 @Component({
   components: {
     ClipIcon,
+    VideoIcon,
+    FileIcon,
   },
 })
 export default class HelloWorld extends Vue {
