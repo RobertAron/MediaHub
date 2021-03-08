@@ -1,12 +1,5 @@
 <template>
-  <div v-if="this.current.status==='Complete'">
-    <dir class="header">
-      <h1>{{ this.current.content.title }}</h1>
-      <b-dropdown variant="primary" text="Actions" right>
-        <b-dropdown-item :href="this.current.content.downloadUrl"><b-icon-download/> Download</b-dropdown-item>
-        <b-dropdown-item @click="deleteItem"><b-icon-trash/> Delete</b-dropdown-item>
-      </b-dropdown>
-    </dir>
+  <div v-if="this.current.status==='Complete'" class='details-container'>
     
     <VuePlayerVue v-if="this.current.content.videoSrc !== undefined">
       <source :src="this.current.content.videoSrc" :type="this.current.content.videoType" />
@@ -18,25 +11,33 @@
     </picture>
 
     <p v-else>No preview is available for this content.</p>
+    <b-card>
+      <dir class="header">
+        <h1>{{ this.current.content.title }}</h1>
+        <b-dropdown variant="primary" text="Actions" right>
+          <b-dropdown-item :href="this.current.content.downloadUrl"><b-icon-download/> Download</b-dropdown-item>
+          <b-dropdown-item @click="deleteItem"><b-icon-trash/> Delete</b-dropdown-item>
+        </b-dropdown>
+      </dir>
 
-
-    <p>
-      <sub>
-        <time :datetime="new Date(this.current.content.createdDate).toString()">
-          {{ new Date(this.current.content.createdDate).toLocaleString() }}
-        </time>
-      </sub>
-    </p>
-    <p>{{ this.current.content.description }}</p>
+      <p>
+        <sub>
+          <time :datetime="new Date(this.current.content.createdDate).toString()">
+            {{ new Date(this.current.content.createdDate).toLocaleString() }}
+          </time>
+        </sub>
+      </p>
+      <p>{{ this.current.content.description }}</p>
+    </b-card>
 
     
   </div>
-
-
   <div v-else-if="this.current.status==='Loading'">
-    <b-skeleton/>
-    <b-skeleton-img/>
-    <b-skeleton/>
+      <b-card>
+      <b-skeleton-img/>
+      <b-skeleton/>
+      <b-skeleton type="input"></b-skeleton>
+    </b-card>
   </div>
   <div v-else>
     <p>Error loading content. Are you sure you have the right url?</p>
@@ -110,5 +111,10 @@ export default Vue.extend({
   display: flex;
   justify-content: space-between;
   padding: 0;
+}
+
+.details-container{
+  display:grid;
+  gap: var(--spacing);
 }
 </style>
