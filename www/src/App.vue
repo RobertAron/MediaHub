@@ -32,11 +32,3 @@ body {
 }
 
 </style>
-
-<script lang="ts">
-import Vue from 'vue'
-import '@videojs/themes/dist/sea/index.css';
-export default Vue.extend({
-  
-})
-</script>

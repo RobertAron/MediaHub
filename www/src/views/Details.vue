@@ -8,7 +8,7 @@
       </b-dropdown>
     </dir>
     
-    <video controls v-if="this.current.content.videoSrc !== undefined"  class="video-js vjs-theme-city">
+    <video controls v-if="this.current.content.videoSrc !== undefined"  class="video-js vjs-theme-sea">
       <source :src="this.current.content.videoSrc" :type="this.current.content.videoType" />
       Sorry, your browser doesn't support embedded videos.
     </video>
