@@ -8,7 +8,12 @@
       </b-dropdown>
     </dir>
     
-    <video controls v-if="this.current.content.videoSrc !== undefined"  class="video-js vjs-theme-sea">
+    <video
+      controls
+      v-if="this.current.content.videoSrc !== undefined" 
+      class="video-js vjs-theme-sea"
+      id="my-video"
+    >
       <source :src="this.current.content.videoSrc" :type="this.current.content.videoType" />
       Sorry, your browser doesn't support embedded videos.
     </video>
@@ -99,8 +104,5 @@ export default Vue.extend({
   display: flex;
   justify-content: space-between;
   padding: 0;
-}
-video {
-  width: 100%;
 }
 </style>
