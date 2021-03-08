@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar toggleable="lg" variant='primary' type='dark'>
       <b-navbar-brand to="/">Media Hub</b-navbar-brand>
       <!-- upload link -->
       <!-- browse link -->
@@ -25,6 +25,8 @@
 
 body {
   overflow-y: scroll;
+  background: #fafafa !important;
+  min-height: 100vh;
 }
 
 .mainContainer {
