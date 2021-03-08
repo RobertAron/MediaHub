@@ -22,10 +22,10 @@ export default class MyStack extends sst.Stack {
       ]
     })
 
-    const table = new sst.Table(this, "filesLog", {
+    const table = new sst.Table(this, "filesDB", {
       fields: {
         id: sst.TableFieldType.STRING,
-        uploadedTimestamp: sst.TableFieldType.NUMBER
+        createdDate: sst.TableFieldType.NUMBER
       },
       primaryIndex: { partitionKey: 'id' },
       secondaryIndexes: {

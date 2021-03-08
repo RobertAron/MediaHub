@@ -3,7 +3,7 @@ type FileBase = {
   title: string;
   description: string;
   downloadUrl: string;
-  uploadedTimestamp: number;
+  createdDate: number;
 };
 
 type Picture = {

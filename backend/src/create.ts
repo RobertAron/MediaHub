@@ -28,7 +28,7 @@ export async function main(event : APIGatewayEvent): Promise<APIGatewayProxyResu
 
   const item = {
     id: id,
-    uploadedTimestamp: Date.now(),
+    createdDate: Date.now(),
     title: res.title,
     imageSrc,
     videoSrc,

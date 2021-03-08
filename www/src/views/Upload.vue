@@ -1,37 +1,40 @@
 <template>
   <div>
+    <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
+      Error uploading file :(
+    </b-alert>  
     <b-card>
       <h2>Upload a file!</h2>
       <b-form @submit.prevent="onSubmit">
-        <div class='grouped-inputs'>
-          <b-form-group
-            id="input-group-title"
-            label="Title:"
-            label-for="title-input"
-          >
-            <b-form-input
-              id="title-input"
-              type="text"
-              v-model="title"
-              placeholder="Title your content"
-              required
-            />
-          </b-form-group>
-          <b-form-group
-            id="input-group-file"
-            label="File:"
-            label-for="file-input"
-            :description='fileHelperText'
-          >
-            <b-form-file
-              id="file-input"
-              placeholder="Choose a file or drop it here..."
-              drop-placeholder="Drop file here..."
-              v-model="file"
-              required
-            />
-          </b-form-group>
-        </div>
+        <b-form-group
+          id="input-group-title"
+          label="Title:"
+          label-for="title-input"
+        >
+          <b-form-input
+            id="title-input"
+            type="text"
+            v-model="title"
+            placeholder="Title your content"
+            required
+          />
+        </b-form-group>
+        <b-form-group
+          id="input-group-file"
+          label="File:"
+          label-for="file-input"
+          :description='fileHelperText'
+        >
+          <b-form-file
+            id="file-input"
+            placeholder="Choose a file or drop it here..."
+            drop-placeholder="Drop file here..."
+            v-model="file"
+            :state='fileState'
+            required
+          />
+        </b-form-group>
+
         <b-form-group
           id="input-group-description"
           label="Description:"
@@ -51,7 +54,7 @@
         </div>
       </b-form>
     </b-card>
-    <b-progress v-if="isLoading" :value="percantageComplete" :max="1" show-progress animated></b-progress>
+    <b-progress v-if="isLoading" :value="percentageComplete" :max="1" show-progress animated></b-progress>
   </div>
 </template>
 
@@ -68,15 +71,21 @@ export default Vue.extend({
       file: null  as File | null,
       description: '',
       isLoading: false,
-      percantageComplete: 0
+      percentageComplete: 0,
+      showDismissibleAlert: false
     }
   },
   computed: {
     fileHelperText(): string{
-      const fileSize = this.file? this.file.size / 1000000 :  null
+      const fileSize = this.file? Math.round(this.file.size / 10000) /100 :  null
       const sizeText = this.file? ` The current file size is ${fileSize}`:''
-      const helperText = `File size must be under 6mb.${sizeText}`
+      const helperText = `File size must be under 6MB.${sizeText}`
       return helperText
+    },
+    fileState(): boolean | null {
+      if(this.file  === null) return null
+      if(this.file.size > 6 * 1000000) return false
+      return null
     }
   },
   methods: {
@@ -85,10 +94,18 @@ export default Vue.extend({
       if(this.file === null) return
       if(this.file.size> 6 * 1000000) return
       this.isLoading = true
-      const res = await createFile(this.title, this.file, this.description, (progressEvent)=>{
-        this.percantageComplete = progressEvent.loaded / progressEvent.total
-      })
-      this.$router.push({name: 'FileDetails', params:{id:res.id}} )
+      try{
+        const res = await createFile(this.title, this.file, this.description, (progressEvent)=>{
+          this.percentageComplete = progressEvent.loaded / progressEvent.total
+        })
+        this.$router.push({name: 'FileDetails', params:{id:res.id}} )
+      }
+      catch(err){
+        console.error(err)
+        this.isLoading = false
+        this.percentageComplete = 0
+        this.showDismissibleAlert = true
+      }
     }
   }
 })
@@ -101,11 +118,5 @@ export default Vue.extend({
   gap: var(--spacing);
   grid-auto-flow: column;
   grid-auto-columns: min-content;
-}
-
-.grouped-inputs{
-  display: grid;
-  gap: var(--spacing);
-  grid-auto-flow: column;
 }
 </style>

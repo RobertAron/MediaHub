@@ -23,7 +23,7 @@ export type tempRes = {
 async function listFiles(){
     const url = `${baseURL}/files`
     const res = await axios.get<Content[]>(url)
-    return res.data
+    return res.data.sort((a,b)=>b.createdDate-a.createdDate)
 }
 
 async function getFile(id : string){

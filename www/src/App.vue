@@ -30,4 +30,13 @@ body {
 .mainContainer {
   padding: var(--spacing) 0;
 }
+
 </style>
+
+<script lang="ts">
+import Vue from 'vue'
+import '@videojs/themes/dist/sea/index.css';
+export default Vue.extend({
+  
+})
+</script>

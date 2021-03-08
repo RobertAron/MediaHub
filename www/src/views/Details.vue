@@ -8,7 +8,7 @@
       </b-dropdown>
     </dir>
     
-    <video controls v-if="this.current.content.videoSrc !== undefined">
+    <video controls v-if="this.current.content.videoSrc !== undefined"  class="video-js vjs-theme-city">
       <source :src="this.current.content.videoSrc" :type="this.current.content.videoType" />
       Sorry, your browser doesn't support embedded videos.
     </video>
@@ -22,8 +22,8 @@
 
     <p>
       <sub>
-        <time :datetime="new Date(this.current.content.uploadedTimestamp).toString()">
-          {{ new Date(this.current.content.uploadedTimestamp).toLocaleString() }}
+        <time :datetime="new Date(this.current.content.createdDate).toString()">
+          {{ new Date(this.current.content.createdDate).toLocaleString() }}
         </time>
       </sub>
     </p>

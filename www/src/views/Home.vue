@@ -27,14 +27,14 @@
             <h4>{{ item.title }}</h4>
             <p>
               <small>
-                Uploaded {{ new Date(item.uploadedTimestamp).toLocaleString() }}
+                Uploaded {{ new Date(item.createdDate).toLocaleString() }}
               </small>
             </p>
           </b-card-body>
         </b-link>
       </b-card>
     </div>
-    <div v-for="n in isLoading?2:0" :key='n'>
+    <div v-for="n in isLoading?8:0" :key='n'>
       <b-skeleton-img/>
     </div>
   </div>

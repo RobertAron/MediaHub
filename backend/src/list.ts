@@ -9,14 +9,14 @@ export async function main(): Promise<APIGatewayProxyResult> {
   const params: DynamoDB.DocumentClient.ScanInput = {
     // Get the table name from the environment variable
     TableName: process.env.tableName,
-    // IndexName: 'fileTimeIndex' ??? sort by date???
+    IndexName: 'fileTimeIndex',
     
   };
   const res = await dynamoDb.scan(params).promise()
 
   res.Items?.map((ele)=>{
     ele.id
-    ele.uploadedTimestamp
+    ele.createdDate
     ele.title
     ele.imageSrc
     ele.downloadUrl
