@@ -33,8 +33,8 @@
     
   </div>
   <div v-else-if="this.current.status==='Loading'">
-      <b-card>
       <b-skeleton-img/>
+      <b-card>
       <b-skeleton/>
       <b-skeleton type="input"></b-skeleton>
     </b-card>
