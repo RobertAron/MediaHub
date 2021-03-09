@@ -15,7 +15,7 @@
       <dir class="header">
         <h1>{{ this.current.content.title }}</h1>
         <b-dropdown variant="primary" text="Actions" right>
-          <b-dropdown-item :href="this.current.content.downloadUrl"><b-icon-download/> Download</b-dropdown-item>
+          <b-dropdown-item :href="this.current.content.downloadUrl" download><b-icon-download/> Download</b-dropdown-item>
           <b-dropdown-item @click="deleteItem"><b-icon-trash/> Delete</b-dropdown-item>
         </b-dropdown>
       </dir>

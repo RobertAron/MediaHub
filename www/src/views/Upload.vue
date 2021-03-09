@@ -79,12 +79,12 @@ export default Vue.extend({
     fileHelperText(): string{
       const fileSize = this.file? Math.round(this.file.size / 10000) /100 :  null
       const sizeText = this.file? ` The current file size is ${fileSize}`:''
-      const helperText = `File size must be under 6MB.${sizeText}`
+      const helperText = `File size must be under 5MB.${sizeText}`
       return helperText
     },
     fileState(): boolean | null {
       if(this.file  === null) return null
-      if(this.file.size > 6 * 1000000) return false
+      if(this.file.size > 5 * 1000000) return false
       return null
     }
   },
@@ -92,7 +92,7 @@ export default Vue.extend({
     async onSubmit(event: Event) {
       if (!(event.target instanceof HTMLFormElement)) return;
       if(this.file === null) return
-      if(this.file.size> 6 * 1000000) return
+      if(this.file.size> 5 * 1000000) return
       this.isLoading = true
       try{
         const res = await createFile(this.title, this.file, this.description, (progressEvent)=>{

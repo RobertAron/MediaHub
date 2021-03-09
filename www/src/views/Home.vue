@@ -13,7 +13,7 @@
       </div>
       <div v-for="item in filteredContent" :key="item.id">
         <b-card no-body class="card">
-          <b-button :href="item.downloadUrl" download class="floatingButton" variant="outline-primary">
+          <b-button target="_blank" :href="item.downloadUrl" download class="floatingButton" variant="outline-primary" title='Download'>
             <b-icon icon="download" aria-label="download" />
           </b-button>
           <b-link :to="{ name: 'FileDetails', params: { id: item.id } }">
