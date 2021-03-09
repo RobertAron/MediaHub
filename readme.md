@@ -8,7 +8,7 @@ This repo contains the code for the entire application.
 
 ### Tech Stack
 
-![Stack Overview](/readme-images\MediaHub_Overview.png)
+![Stack Overview](/readme-images/MediaHub_Overview.png)
 
 ## Going forward with the app
 
