@@ -1,6 +1,6 @@
 # Media Hub
 
-[Media Hub]([www.Robertaron.io/MediaHub](http://www.robertaron.io/MediaHub/#/)) is an app for uploading and download files. When the files are media based (file or video) you will be able to view the files in your browser.
+[Media Hub](http://www.robertaron.io/MediaHub/#/) is an app for uploading and download files. When the files are media based (file or video) you will be able to view the files in your browser.
 
 This repo contains the code for the entire application. 
 
