@@ -15,4 +15,4 @@ This repo contains the code for the entire application.
 Overall fairly happy with the product considering it was built over the course of a week. Given another week here are the main two things I'd like to work on
 
 - UI design. It works well functionally, but could use more flare 🎉
-- Upload Limit Increase. 6mb is fairly small. Currently this is a limit with AWS Lambda. In order to fix this I would spend a bit of time converting the API to use a more robust server.
+- Upload Limit Increase. 5mb is fairly small. Currently this is a limit with AWS Lambda. In order to fix this I would spend a bit of time converting the API to use a more robust server.
